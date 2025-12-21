@@ -6,10 +6,10 @@ import importlib.util
 import sys
 from datetime import datetime
 
-from uvloop import install
+# from uvloop import install
 from pathlib import Path
 
-install()
+# install()
 from aiohttp import web
 from pyrogram import idle
 from pyrogram.errors import FloodWait, MessageNotModified
