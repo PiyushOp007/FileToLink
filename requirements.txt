@@ -4,3 +4,8 @@ Jinja2
 pyrofork
 motor
 dnspython
+psutil
+python-dotenv
+speedtest-cli
+tgcrypto
+uvloop
