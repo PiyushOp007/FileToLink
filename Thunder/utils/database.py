@@ -2,22 +2,21 @@
 
 import datetime
 from typing import Optional, Dict, Any
-from pymongo import AsyncMongoClient
-from pymongo.asynchronous.collection import AsyncCollection
+from motor.motor_asyncio import AsyncIOMotorClient
 from Thunder.vars import Var
 from Thunder.utils.logger import logger
 
 
 class Database:
     def __init__(self, uri: str, database_name: str, *args, **kwargs):
-        self._client = AsyncMongoClient(uri, tls=True, tlsAllowInvalidCertificates=True, *args, **kwargs)
+        self._client = AsyncIOMotorClient(uri, tls=True, tlsAllowInvalidCertificates=True, *args, **kwargs)
         self.db = self._client[database_name]
-        self.col: AsyncCollection = self.db.users
-        self.banned_users_col: AsyncCollection = self.db.banned_users
-        self.banned_channels_col: AsyncCollection = self.db.banned_channels
-        self.token_col: AsyncCollection = self.db.tokens
-        self.authorized_users_col: AsyncCollection = self.db.authorized_users
-        self.restart_message_col: AsyncCollection = self.db.restart_message
+        self.col = self.db.users
+        self.banned_users_col = self.db.banned_users
+        self.banned_channels_col = self.db.banned_channels
+        self.token_col = self.db.tokens
+        self.authorized_users_col = self.db.authorized_users
+        self.restart_message_col = self.db.restart_message
 
     async def ensure_indexes(self):
         try:
@@ -210,6 +209,6 @@ class Database:
 
     async def close(self):
         if self._client:
-            await self._client.close()
+            self._client.close()
 
 db = Database(Var.DATABASE_URL, Var.NAME)
