@@ -44,7 +44,7 @@ class Var:
 
     NAME: str = os.getenv("NAME", "ThunderF2L")
     SLEEP_THRESHOLD: int = get_int_env("SLEEP_THRESHOLD", 600)
-    WORKERS: int = get_int_env("WORKERS", 8)
+    WORKERS: int = get_int_env("WORKERS", 4)
 
     BIN_CHANNEL: int = get_int_env("BIN_CHANNEL", 0)
 
@@ -54,7 +54,7 @@ class Var:
 
     PORT: int = get_int_env("PORT", 8080)
     BIND_ADDRESS: str = os.getenv("BIND_ADDRESS", "0.0.0.0")
-    PING_INTERVAL: int = get_int_env("PING_INTERVAL", 840)
+    PING_INTERVAL: int = get_int_env("PING_INTERVAL", 600)
     NO_PORT: bool = str_to_bool(os.getenv("NO_PORT", "True"))
 
     OWNER_ID: int = get_int_env("OWNER_ID", 0)
