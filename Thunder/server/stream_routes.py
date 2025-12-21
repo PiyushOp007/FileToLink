@@ -158,7 +158,8 @@ async def media_preview(request: web.Request):
         logger.debug(
             f"Client error in preview: {type(e).__name__} - {e}",
             exc_info=True)
-        raise web.HTTPNotFound(text=f"Resource not found: {e}") from e
+        error_html = f"<html><body><h1>404 Not Found</h1><p>Debug Info:</p><pre>{type(e).__name__}: {e}</pre></body></html>"
+        return web.Response(text=error_html, status=404, content_type='text/html')
     except Exception as e:
 
         error_id = secrets.token_hex(6)
@@ -269,8 +270,9 @@ async def media_delivery(request: web.Request):
                 text=f"Server error during streaming: {error_id}") from e
 
     except (InvalidHash, FileNotFound) as e:
-        logger.debug(f"Client error: {type(e).__name__} - {e}", exc_info=True)
-        raise web.HTTPNotFound(text=f"Resource not found: {e}") from e
+        # logger.debug(f"Client error: {type(e).__name__} - {e}", exc_info=True)
+        error_html = f"<html><body><h1>404 Not Found</h1><p>Debug Info:</p><pre>{type(e).__name__}: {e}</pre></body></html>"
+        return web.Response(text=error_html, status=404, content_type='text/html')
     except Exception as e:
         error_id = secrets.token_hex(6)
         logger.error(f"Server error {error_id}: {e}", exc_info=True)
