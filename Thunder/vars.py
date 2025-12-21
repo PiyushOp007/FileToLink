@@ -62,7 +62,7 @@ class Var:
     if not OWNER_ID:
         logger.warning("WARNING: OWNER_ID is not set. No user will be granted owner access.")
 
-    FQDN: str = os.getenv("FQDN", "") or BIND_ADDRESS
+    FQDN: str = (os.getenv("FQDN", "") or BIND_ADDRESS).rstrip("/")
     HAS_SSL: bool = str_to_bool(os.getenv("HAS_SSL", "True"))
     PROTOCOL: str = "https" if HAS_SSL else "http"
     PORT_SEGMENT: str = "" if NO_PORT else f":{PORT}"
