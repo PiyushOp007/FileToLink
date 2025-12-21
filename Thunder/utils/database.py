@@ -7,11 +7,10 @@ from pymongo.asynchronous.collection import AsyncCollection
 from Thunder.vars import Var
 from Thunder.utils.logger import logger
 
-import certifi
 
 class Database:
     def __init__(self, uri: str, database_name: str, *args, **kwargs):
-        self._client = AsyncMongoClient(uri, tlsCAFile=certifi.where(), *args, **kwargs)
+        self._client = AsyncMongoClient(uri, tls=True, tlsAllowInvalidCertificates=True, *args, **kwargs)
         self.db = self._client[database_name]
         self.col: AsyncCollection = self.db.users
         self.banned_users_col: AsyncCollection = self.db.banned_users
