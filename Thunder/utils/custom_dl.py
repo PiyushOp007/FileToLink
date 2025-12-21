@@ -17,8 +17,10 @@ class ByteStreamer:
     def __init__(self, client: Client) -> None:
         self.client = client
         self.chat_id = int(Var.BIN_CHANNEL)
+        print(f"DEBUG: ByteStreamer initialized with Chat ID: {self.chat_id}")
 
     async def get_message(self, message_id: int) -> Message:
+        print(f"DEBUG: Fetching message {message_id} from Chat {self.chat_id}")
         while True:
             try:
                 message = await self.client.get_messages(self.chat_id, message_id)
@@ -27,6 +29,7 @@ class ByteStreamer:
                 logger.debug(f"FloodWait: get_message, sleep {e.value}s")
                 await asyncio.sleep(e.value)
             except Exception as e:
+                print(f"DEBUG: Error fetching message {message_id}: {e}")
                 logger.debug(f"Error fetching message {message_id}: {e}", exc_info=True)
                 raise FileNotFound(f"Message {message_id} not found") from e
         
