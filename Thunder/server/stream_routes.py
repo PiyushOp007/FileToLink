@@ -164,7 +164,8 @@ async def media_preview(request: web.Request):
         logger.debug(
             f"Client error in preview: {type(e).__name__} - {e}",
             exc_info=True)
-        error_html = f"<html><body><h1>404 Not Found</h1><p>Debug Info:</p><pre>{type(e).__name__}: {e}</pre></body></html>"
+        padding = " " * 1024
+        error_html = f"<html><body><h1>404 Not Found</h1><p>Debug Info:</p><pre>{type(e).__name__}: {e}</pre><!-- {padding} --></body></html>"
         return web.Response(text=error_html, status=404, content_type='text/html')
     except Exception as e:
 
@@ -278,7 +279,8 @@ async def media_delivery(request: web.Request):
 
     except (InvalidHash, FileNotFound) as e:
         # logger.debug(f"Client error: {type(e).__name__} - {e}", exc_info=True)
-        error_html = f"<html><body><h1>404 Not Found</h1><p>Debug Info:</p><pre>{type(e).__name__}: {e}</pre></body></html>"
+        padding = " " * 1024
+        error_html = f"<html><body><h1>404 Not Found</h1><p>Debug Info:</p><pre>{type(e).__name__}: {e}</pre><!-- {padding} --></body></html>"
         return web.Response(text=error_html, status=404, content_type='text/html')
     except Exception as e:
         error_id = secrets.token_hex(6)
