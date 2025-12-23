@@ -62,7 +62,7 @@ class Var:
     if not OWNER_ID:
         logger.warning("WARNING: OWNER_ID is not set. No user will be granted owner access.")
 
-    FQDN: str = (os.getenv("FQDN", "") or BIND_ADDRESS).rstrip("/")
+    FQDN: str = (os.getenv("FQDN", "") or BIND_ADDRESS).replace("http://", "").replace("https://", "").rstrip("/")
     HAS_SSL: bool = str_to_bool(os.getenv("HAS_SSL", "True"))
     PROTOCOL: str = "https" if HAS_SSL else "http"
     PORT_SEGMENT: str = "" if NO_PORT else f":{PORT}"
@@ -109,3 +109,5 @@ class Var:
     MAX_FILES_PER_PERIOD: int = get_int_env("MAX_FILES_PER_PERIOD", 2)
     RATE_LIMIT_PERIOD_MINUTES: int = get_int_env("RATE_LIMIT_PERIOD_MINUTES", 1)
     MAX_QUEUE_SIZE: int = get_int_env("MAX_QUEUE_SIZE", 100)
+
+    print(f"DEBUG: Configuration URL set to: {URL}")
