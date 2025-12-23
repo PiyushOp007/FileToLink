@@ -145,10 +145,6 @@ async def status_endpoint(request):
 
 
 
-@routes.get("/debug")
-async def debug_endpoint(request):
-    return web.Response(text="Server is running and updates are live!")
-
 @routes.get(r"/watch/{path:.+}", allow_head=True)
 
 async def media_preview(request: web.Request):
@@ -177,7 +173,6 @@ async def media_preview(request: web.Request):
 
 @routes.get(r"/{path:.+}", allow_head=True)
 async def media_delivery(request: web.Request):
-    print(f"DEBUG: Hit media_delivery with path: {request.match_info['path']}")
     try:
         path = request.match_info["path"]
         message_id, secure_hash = parse_media_request(path, request.query)
